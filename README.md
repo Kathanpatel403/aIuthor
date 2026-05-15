@@ -84,7 +84,7 @@ This document is the **single source of truth** for building the Gateway Digital
 | Vector DB | **Pinecone** |
 | Memory store | **In memory cache** (persistent book state) (not having redis setup)|
 | Embeddings | OpenAI **text-embedding-3-small** |
-| Reranker | Cohere **rerank-english-v3.0** |
+| Reranker | **Pinecone Inference** (`cohere-rerank-3.5`, same `PINECONE_API_KEY`) |
 | RAG sources | user PDF uploads |
 | PDF | **WeasyPrint** |
 | DOCX | **python-docx** |
@@ -184,7 +184,7 @@ demo_gateway/
 - Dense retrieval (top-k)
 - BM25 keyword retrieval
 - Hybrid merge (dense + BM25)
-- Cohere rerank
+- Cohere rerank **via Pinecone Inference** only (`PINECONE_API_KEY` + `PINECONE_RERANK_MODEL`, e.g. `cohere-rerank-3.5`) — no separate Cohere API
 - `ChapterFactPack` schema
 - **Verify:** `make test` (RAG unit tests) or `POST /api/rag/chapter-fact-pack` with keys set → ≥1 grounded chunk; with full keys + corpus size, aim for ≥5 reranked chunks
 
@@ -336,9 +336,9 @@ demo_gateway/
 |-------|----------------|
 | 1 | `make run-backend` + `make run-frontend` + `/health` |
 | 2 | `make test-backend` + memory GET + insert-repair POST |
-| 3 | `make test` + `POST /api/rag/chapter-fact-pack` (needs `OPENAI_API_KEY`; optional Tavily / Pinecone / Cohere) |
-| 4 | Cascader + judge on 5 surfaces |
-| 5 | Unit per agent + LangGraph E2E → PDF |
+| 3 | `make test` + `POST /api/rag/chapter-fact-pack` (`OPENAI_API_KEY`; optional Tavily + Pinecone for dense/rerank) |
+| 4 | `cascade_system_modifier` + `score_tonality_fidelity` (needs Anthropic for judge) |
+| 5 | `POST /api/generate/pipeline/run` + LangGraph; outputs under `sample_books/{book_id}/` |
 | 6 | `traces/{book_id}/` complete |
 | 7 | `evals_report.json` from API or CLI |
 | 8 | Full UI flow + insert-chapter flow |

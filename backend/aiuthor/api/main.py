@@ -9,6 +9,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from aiuthor import __version__
+from aiuthor.api.routes import generate as generate_routes
 from aiuthor.api.routes import memory as memory_routes
 from aiuthor.api.routes import rag as rag_routes
 from aiuthor.config.settings import get_settings
@@ -65,6 +66,10 @@ def create_app() -> FastAPI:
     app.include_router(
         rag_routes.router,
         prefix=f"{settings.aiuthor_api_prefix}/rag",
+    )
+    app.include_router(
+        generate_routes.router,
+        prefix=f"{settings.aiuthor_api_prefix}/generate",
     )
 
     return app
