@@ -10,6 +10,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from aiuthor import __version__
 from aiuthor.api.routes import memory as memory_routes
+from aiuthor.api.routes import rag as rag_routes
 from aiuthor.config.settings import get_settings
 from aiuthor.observability.langsmith_setup import configure_langsmith_runtime_env
 
@@ -60,6 +61,10 @@ def create_app() -> FastAPI:
     app.include_router(
         memory_routes.router,
         prefix=f"{settings.aiuthor_api_prefix}/memory",
+    )
+    app.include_router(
+        rag_routes.router,
+        prefix=f"{settings.aiuthor_api_prefix}/rag",
     )
 
     return app
