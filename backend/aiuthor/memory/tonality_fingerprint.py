@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from aiuthor.memory.schemas import TonalitySurfaceRecord
 from aiuthor.memory.store import BookMemoryState, get_memory_store
+from aiuthor.observability.memory_audit import log_memory_io
 
 
 class TonalityFingerprint:
@@ -18,14 +19,19 @@ class TonalityFingerprint:
         st = self._state()
         with self._store._lock:
             st.tonality[record.surface] = record
+        log_memory_io("write", "tonality_fingerprint", f"surface={record.surface}")
         return record
 
     def get_surface(self, surface: str) -> TonalitySurfaceRecord | None:
         st = self._state()
         with self._store._lock:
-            return st.tonality.get(surface)
+            row = st.tonality.get(surface)
+        log_memory_io("read", "tonality_fingerprint", f"get_surface={surface!r} hit={row is not None}")
+        return row
 
     def all_surfaces(self) -> dict[str, TonalitySurfaceRecord]:
         st = self._state()
         with self._store._lock:
-            return dict(st.tonality)
+            d = dict(st.tonality)
+        log_memory_io("read", "tonality_fingerprint", f"all_surfaces count={len(d)}")
+        return d

@@ -11,6 +11,7 @@ from aiuthor.memory import (
     repair_after_chapter_insert,
 )
 from aiuthor.memory.schemas import ChapterInsertRepairReport
+from aiuthor.observability.memory_audit import log_memory_io
 
 router = APIRouter()
 
@@ -44,7 +45,10 @@ def read_memory(book_id: str) -> MemorySnapshot:
     """Return the full memory snapshot for a book (empty shell if never written)."""
     if not book_id.strip():
         raise HTTPException(status_code=400, detail="book_id required")
-    return _snapshot_for_book(book_id.strip())
+    bid = book_id.strip()
+    snap = _snapshot_for_book(bid)
+    log_memory_io("read", "memory_api", f"GET snapshot book_id={bid}", agent="api")
+    return snap
 
 
 class ChapterInsertRepairBody(BaseModel):
@@ -64,4 +68,11 @@ def chapter_insert_repair(book_id: str, body: ChapterInsertRepairBody) -> Chapte
         raise HTTPException(status_code=400, detail="book_id required")
     # Ensure shell book exists so clients can call repair without a prior write ordering.
     get_memory_store().get_or_create(bid)
-    return repair_after_chapter_insert(bid, body.insert_after_chapter)
+    report = repair_after_chapter_insert(bid, body.insert_after_chapter)
+    log_memory_io(
+        "write",
+        "memory_api",
+        f"chapter_insert_repair insert_after={body.insert_after_chapter}",
+        agent="api",
+    )
+    return report

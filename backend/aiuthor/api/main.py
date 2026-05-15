@@ -9,8 +9,11 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from aiuthor import __version__
+from aiuthor.api.routes import evals as evals_routes
+from aiuthor.api.routes import generate as generate_routes
 from aiuthor.api.routes import memory as memory_routes
 from aiuthor.api.routes import rag as rag_routes
+from aiuthor.api.routes import traces as traces_routes
 from aiuthor.config.settings import get_settings
 from aiuthor.observability.langsmith_setup import configure_langsmith_runtime_env
 
@@ -65,6 +68,18 @@ def create_app() -> FastAPI:
     app.include_router(
         rag_routes.router,
         prefix=f"{settings.aiuthor_api_prefix}/rag",
+    )
+    app.include_router(
+        generate_routes.router,
+        prefix=f"{settings.aiuthor_api_prefix}/generate",
+    )
+    app.include_router(
+        traces_routes.router,
+        prefix=f"{settings.aiuthor_api_prefix}/traces",
+    )
+    app.include_router(
+        evals_routes.router,
+        prefix=f"{settings.aiuthor_api_prefix}/evals",
     )
 
     return app

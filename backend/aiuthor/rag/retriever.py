@@ -1,4 +1,4 @@
-"""Hybrid dense + BM25 + Cohere rerank → `ChapterFactPack` (Researcher input)."""
+"""Hybrid dense + BM25 + Pinecone rerank → `ChapterFactPack` (Researcher input)."""
 
 from __future__ import annotations
 
@@ -116,8 +116,8 @@ def retrieve_hybrid(
         top_n=min(len(pool_docs), max(settings.rag_final_top_n * 4, 12)),
         settings=settings,
     )
-    if not settings.cohere_api_key:
-        warnings.append("cohere_skipped_rerank_using_order")
+    if not settings.pinecone_api_key:
+        warnings.append("pinecone_rerank_skipped_no_api_key_using_rrf_order")
 
     ordered_chunk_ids: list[str] = []
     rerank_by_id: dict[str, float] = {}

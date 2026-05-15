@@ -7,6 +7,7 @@ from typing import Literal
 
 from aiuthor.memory.schemas import ConceptRecord
 from aiuthor.memory.store import BookMemoryState, get_memory_store
+from aiuthor.observability.memory_audit import log_memory_io
 
 ConceptKind = Literal["term", "character", "location", "other"]
 
@@ -25,8 +26,10 @@ class ConceptBible:
             for i, c in enumerate(st.concepts):
                 if c.term.lower() == concept.term.lower():
                     st.concepts[i] = concept
+                    log_memory_io("write", "concept_bible", f"upsert replace term={concept.term[:80]}")
                     return concept
             st.concepts.append(concept)
+            log_memory_io("write", "concept_bible", f"upsert append term={concept.term[:80]}")
             return concept
 
     def add_concept(
@@ -51,7 +54,10 @@ class ConceptBible:
     def list_all(self) -> list[ConceptRecord]:
         st = self._state()
         with self._store._lock:
-            return list(st.concepts)
+            n = len(st.concepts)
+            rows = list(st.concepts)
+        log_memory_io("read", "concept_bible", f"list_all count={n}")
+        return rows
 
     def shift_chapters_after_insert(self, insert_after_chapter: int) -> int:
         st = self._state()

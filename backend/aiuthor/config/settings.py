@@ -34,6 +34,9 @@ class Settings(BaseSettings):
     langchain_api_key: str | None = Field(default=None, validation_alias="LANGCHAIN_API_KEY")
     langchain_project: str = Field(default="aiuthor", validation_alias="LANGCHAIN_PROJECT")
 
+    # --- Phase 5 agents ---
+    anthropic_api_key: str | None = Field(default=None, validation_alias="ANTHROPIC_API_KEY")
+
     # --- Phase 3 RAG ---
     openai_api_key: str | None = Field(default=None, validation_alias="OPENAI_API_KEY")
     openai_embedding_model: str = Field(
@@ -42,16 +45,22 @@ class Settings(BaseSettings):
     )
     pinecone_api_key: str | None = Field(default=None, validation_alias="PINECONE_API_KEY")
     pinecone_index_name: str = Field(default="aiuthor", validation_alias="PINECONE_INDEX_NAME")
-    cohere_api_key: str | None = Field(default=None, validation_alias="COHERE_API_KEY")
-    cohere_rerank_model: str = Field(
-        default="rerank-english-v3.0",
-        validation_alias="COHERE_RERANK_MODEL",
+    pinecone_rerank_model: str = Field(
+        default="cohere-rerank-3.5",
+        validation_alias="PINECONE_RERANK_MODEL",
+        description="Pinecone Inference rerank model (hosted; uses PINECONE_API_KEY only).",
     )
     tavily_api_key: str | None = Field(default=None, validation_alias="TAVILY_API_KEY")
     rag_dense_top_k: int = Field(default=20, ge=5, le=100, validation_alias="RAG_DENSE_TOP_K")
     rag_bm25_top_k: int = Field(default=20, ge=5, le=100, validation_alias="RAG_BM25_TOP_K")
     rag_rrf_k: int = Field(default=60, ge=1, validation_alias="RAG_RRF_K")
     rag_final_top_n: int = Field(default=5, ge=1, le=20, validation_alias="RAG_FINAL_TOP_N")
+
+    # Token cost estimates (USD per million tokens) for ledger — adjust to current Anthropic pricing
+    price_sonnet_input_per_mtok: float = Field(default=3.0, validation_alias="PRICE_SONNET_INPUT_PER_MTOK")
+    price_sonnet_output_per_mtok: float = Field(default=15.0, validation_alias="PRICE_SONNET_OUTPUT_PER_MTOK")
+    price_haiku_input_per_mtok: float = Field(default=1.0, validation_alias="PRICE_HAIKU_INPUT_PER_MTOK")
+    price_haiku_output_per_mtok: float = Field(default=5.0, validation_alias="PRICE_HAIKU_OUTPUT_PER_MTOK")
 
 
 @lru_cache
