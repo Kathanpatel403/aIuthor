@@ -186,7 +186,7 @@ demo_gateway/
 - Hybrid merge (dense + BM25)
 - Cohere rerank
 - `ChapterFactPack` schema
-- **Verify:** query e.g. “emergency fund basics” → ≥5 grounded, reranked chunks
+- **Verify:** `make test` (RAG unit tests) or `POST /api/rag/chapter-fact-pack` with keys set → ≥1 grounded chunk; with full keys + corpus size, aim for ≥5 reranked chunks
 
 ---
 
@@ -336,7 +336,7 @@ demo_gateway/
 |-------|----------------|
 | 1 | `make run-backend` + `make run-frontend` + `/health` |
 | 2 | `make test-backend` + memory GET + insert-repair POST |
-| 3 | Hybrid + rerank retrieval smoke test |
+| 3 | `make test` + `POST /api/rag/chapter-fact-pack` (needs `OPENAI_API_KEY`; optional Tavily / Pinecone / Cohere) |
 | 4 | Cascader + judge on 5 surfaces |
 | 5 | Unit per agent + LangGraph E2E → PDF |
 | 6 | `traces/{book_id}/` complete |

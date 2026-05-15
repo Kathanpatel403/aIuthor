@@ -1,4 +1,4 @@
-.PHONY: install install-backend install-frontend run run-backend run-frontend test-backend help
+.PHONY: install install-backend install-frontend run-backend run-frontend test-backend test help
 
 help:
 	@echo "make install           - backend + frontend deps"
@@ -6,7 +6,7 @@ help:
 	@echo "make install-frontend  - npm install in frontend/"
 	@echo "make run-backend       - FastAPI :8000 (cwd backend/)"
 	@echo "make run-frontend      - Vite :5173"
-	@echo "make test-backend      - pytest in backend/"
+	@echo "make test / test-backend - pytest in backend/"
 
 install: install-backend install-frontend
 
@@ -24,3 +24,5 @@ run-frontend:
 
 test-backend:
 	cd backend && python -m pytest tests/ -q
+
+test: test-backend

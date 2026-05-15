@@ -34,6 +34,25 @@ class Settings(BaseSettings):
     langchain_api_key: str | None = Field(default=None, validation_alias="LANGCHAIN_API_KEY")
     langchain_project: str = Field(default="aiuthor", validation_alias="LANGCHAIN_PROJECT")
 
+    # --- Phase 3 RAG ---
+    openai_api_key: str | None = Field(default=None, validation_alias="OPENAI_API_KEY")
+    openai_embedding_model: str = Field(
+        default="text-embedding-3-small",
+        validation_alias="OPENAI_EMBEDDING_MODEL",
+    )
+    pinecone_api_key: str | None = Field(default=None, validation_alias="PINECONE_API_KEY")
+    pinecone_index_name: str = Field(default="aiuthor", validation_alias="PINECONE_INDEX_NAME")
+    cohere_api_key: str | None = Field(default=None, validation_alias="COHERE_API_KEY")
+    cohere_rerank_model: str = Field(
+        default="rerank-english-v3.0",
+        validation_alias="COHERE_RERANK_MODEL",
+    )
+    tavily_api_key: str | None = Field(default=None, validation_alias="TAVILY_API_KEY")
+    rag_dense_top_k: int = Field(default=20, ge=5, le=100, validation_alias="RAG_DENSE_TOP_K")
+    rag_bm25_top_k: int = Field(default=20, ge=5, le=100, validation_alias="RAG_BM25_TOP_K")
+    rag_rrf_k: int = Field(default=60, ge=1, validation_alias="RAG_RRF_K")
+    rag_final_top_n: int = Field(default=5, ge=1, le=20, validation_alias="RAG_FINAL_TOP_N")
+
 
 @lru_cache
 def get_settings() -> Settings:
