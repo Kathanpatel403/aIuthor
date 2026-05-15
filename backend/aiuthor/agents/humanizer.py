@@ -28,4 +28,6 @@ def run_humanizer(draft: str, tonality: str, settings: Settings) -> str:
         user=draft,
         max_tokens=12000,
         temperature=0.5,
+        agent="humanizer",
+        settings=settings,
     )

@@ -56,6 +56,12 @@ class Settings(BaseSettings):
     rag_rrf_k: int = Field(default=60, ge=1, validation_alias="RAG_RRF_K")
     rag_final_top_n: int = Field(default=5, ge=1, le=20, validation_alias="RAG_FINAL_TOP_N")
 
+    # Token cost estimates (USD per million tokens) for ledger — adjust to current Anthropic pricing
+    price_sonnet_input_per_mtok: float = Field(default=3.0, validation_alias="PRICE_SONNET_INPUT_PER_MTOK")
+    price_sonnet_output_per_mtok: float = Field(default=15.0, validation_alias="PRICE_SONNET_OUTPUT_PER_MTOK")
+    price_haiku_input_per_mtok: float = Field(default=1.0, validation_alias="PRICE_HAIKU_INPUT_PER_MTOK")
+    price_haiku_output_per_mtok: float = Field(default=5.0, validation_alias="PRICE_HAIKU_OUTPUT_PER_MTOK")
+
 
 @lru_cache
 def get_settings() -> Settings:

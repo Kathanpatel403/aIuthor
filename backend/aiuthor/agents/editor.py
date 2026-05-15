@@ -24,4 +24,6 @@ def run_editor(book_id: str, chapter_number: int, text: str, tonality: str, sett
         user=user,
         max_tokens=12000,
         temperature=0.4,
+        agent="editor",
+        settings=settings,
     )

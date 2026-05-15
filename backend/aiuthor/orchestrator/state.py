@@ -15,3 +15,4 @@ class BookPipelineState(TypedDict, total=False):
     errors: list[str]
     export_paths: dict[str, str]
     assembled_markdown: str
+    trace_bundle_paths: dict[str, str]

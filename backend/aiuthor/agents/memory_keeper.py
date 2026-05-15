@@ -31,6 +31,8 @@ def run_memory_keeper(
         user=f"chapter_number={chapter_number}\n\nCHAPTER_TEXT:\n{chapter_text[:24000]}",
         max_tokens=4096,
         temperature=0.1,
+        agent="memory_keeper",
+        settings=settings,
     )
     m = re.search(r"\{[\s\S]*\}", raw)
     if not m:

@@ -36,6 +36,8 @@ def score_tonality_fidelity(
         user=prompt,
         max_tokens=256,
         temperature=0.0,
+        agent="tonality_judge",
+        settings=s,
     )
     m = re.search(r"\{[\s\S]*\}", raw)
     if not m:

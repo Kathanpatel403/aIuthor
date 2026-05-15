@@ -17,6 +17,7 @@ router = APIRouter()
 class PipelineResponse(BaseModel):
     book_id: str
     export_paths: dict[str, str]
+    trace_bundle_paths: dict[str, str]
 
 
 @router.post("/pipeline/run", response_model=PipelineResponse)
@@ -31,4 +32,5 @@ def run_pipeline(brief: UserBrief) -> PipelineResponse:
     paths = result.get("export_paths") or {}
     if not paths:
         raise HTTPException(status_code=500, detail="Pipeline finished but no export paths were produced")
-    return PipelineResponse(book_id=book_id, export_paths=paths)
+    bundle = result.get("trace_bundle_paths") or {}
+    return PipelineResponse(book_id=book_id, export_paths=paths, trace_bundle_paths=bundle)

@@ -29,6 +29,8 @@ def ai_tell_violations_llm(text: str, *, settings: Settings | None = None) -> li
         user=user,
         max_tokens=400,
         temperature=0.0,
+        agent="ai_tell_judge",
+        settings=s,
     )
     m = re.search(r"\{[\s\S]*\}", raw)
     if not m:

@@ -239,15 +239,17 @@ demo_gateway/
 
 **Goal:** Every run emits a **trace bundle**.
 
-**Tasks to cover:**
+**Implemented:** timing spans per LangGraph step, Anthropic prompt + usage logs, memory-store audit hooks, USD ledger estimates — persisted under `demo_gateway/traces/{book_id}/`.
 
-- `agent_tracer.py` — LangSmith per agent step
-- `prompt_logger.py` — full prompts + timestamps
-- `memory_io_logger.py` — every memory read/write + agent name
-- `token_cost_ledger.py` — tokens in/out + cost per agent
-- Auto-save under `traces/{book_id}/` after run
-- API: `GET /traces/{book_id}` — summary or bundle manifest
-- **Verify:** one pipeline run → all log files populated
+**Tasks / artifacts:**
+
+- `observability/agent_tracer.py` — `trace_span()` timing entries appended to collector  
+- `observability/prompt_logger.py` — logs each LLM system/user + response preview  
+- `observability/memory_audit.py` — memory read/write lines (wired into stores + repair + memory API)  
+- `observability/token_cost_ledger.py` — per-call tokens + estimated USD (`PRICE_*` in `.env`)  
+- `observability/bundle.py` — writes `manifest.json`, `agent_trace.json`, `prompts.jsonl`, `memory_io.jsonl`, `token_cost_ledger.json` after each pipeline run (also on pipeline failure)  
+- API: **`GET /api/traces/{book_id}`** — manifest + file size stats  
+- **Verify:** run pipeline → inspect `traces/{book_id}/` + hit traces API  
 
 ---
 
@@ -255,16 +257,18 @@ demo_gateway/
 
 **Goal:** Automated evals post-generation; JSON report + failure notes.
 
-**Tasks to cover:**
+**Implemented:** weighted rubric (structural 0.25, tonality 0.20, AI-tells 0.20, callbacks 0.15, fact coverage 0.20).
 
-- `structural_check.py` — front/back matter completeness
-- `tonality_eval.py` — embedding distance to exemplars (and/or judge)
-- `ai_tell_detector.py` — rules + optional LLM pass
-- `callback_recall.py` — later chapters reference earlier concepts
-- `fact_coverage.py` (add if not in original tree) — claims vs fact registry
-- Master runner → `evals_report.json`
-- API: `POST /evals/{book_id}` → report
-- **Verify:** run on a generated book → scores per dimension
+**Tasks / artifacts:**
+
+- `evals/structural_check.py` — required `# ...` headings for front/body/back  
+- `evals/tonality_eval.py` — OpenAI embedding cosine vs preset exemplar text  
+- `evals/ai_tell_detector.py` — Humanizer rule-list penalties  
+- `evals/callback_recall.py` — keyword overlap callbacks ↔ chapter bodies  
+- `evals/fact_coverage.py` — fact registry claims ↔ body keyword overlap  
+- `evals/runner.py` → writes **`traces/{book_id}/evals_report.json`**  
+- API: **`POST /api/evals/{book_id}?target_tonality=conversational`** — optional JSON body `{ "markdown_override": "..." }`  
+- **Verify:** generate a book → POST evals → check scores + `evals_report.json`  
 
 ---
 
@@ -339,8 +343,8 @@ demo_gateway/
 | 3 | `make test` + `POST /api/rag/chapter-fact-pack` (`OPENAI_API_KEY`; optional Tavily + Pinecone for dense/rerank) |
 | 4 | `cascade_system_modifier` + `score_tonality_fidelity` (needs Anthropic for judge) |
 | 5 | `POST /api/generate/pipeline/run` + LangGraph; outputs under `sample_books/{book_id}/` |
-| 6 | `traces/{book_id}/` complete |
-| 7 | `evals_report.json` from API or CLI |
+| 6 | Pipeline run → `traces/{book_id}/manifest.json` + `GET /api/traces/{book_id}` |
+| 7 | `POST /api/evals/{book_id}` → `evals_report.json` |
 | 8 | Full UI flow + insert-chapter flow |
 
 ---

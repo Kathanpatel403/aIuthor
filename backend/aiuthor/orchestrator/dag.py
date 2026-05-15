@@ -9,6 +9,8 @@ except ImportError:  # pragma: no cover
 
 from langgraph.graph import END, StateGraph
 
+from aiuthor.observability.bundle import save_trace_bundle
+from aiuthor.observability.context import pipeline_run_context, utc_iso
 from aiuthor.orchestrator.graph_nodes import (
     assemble_node,
     chapter_node,
@@ -36,5 +38,21 @@ def build_book_graph():
 
 def run_book_pipeline(book_id: str, brief_dict: dict) -> dict:
     graph = build_book_graph()
-    initial = {"book_id": book_id, "brief": brief_dict}
-    return graph.invoke(initial)
+    initial: BookPipelineState = {"book_id": book_id, "brief": brief_dict}
+    with pipeline_run_context(book_id) as coll:
+        try:
+            result = dict(graph.invoke(initial))
+        except Exception as exc:  # noqa: BLE001
+            coll.trace_events.append(
+                {
+                    "ts": utc_iso(),
+                    "step": "pipeline",
+                    "phase": "error",
+                    "error": f"{exc.__class__.__name__}: {exc}",
+                }
+            )
+            save_trace_bundle(coll, export_paths={})
+            raise
+        bundle_paths = save_trace_bundle(coll, export_paths=result.get("export_paths"))
+        result["trace_bundle_paths"] = bundle_paths
+        return result

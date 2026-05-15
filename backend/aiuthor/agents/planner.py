@@ -26,6 +26,8 @@ def run_planner(brief: UserBrief, settings: Settings) -> BookOutline:
             user=user,
             max_tokens=4096,
             temperature=0.3,
+            agent="planner",
+            settings=settings,
         )
         m = re.search(r"\{[\s\S]*\}", raw)
         if not m:

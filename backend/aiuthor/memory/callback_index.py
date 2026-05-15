@@ -7,6 +7,7 @@ from typing import Literal
 
 from aiuthor.memory.schemas import CallbackRecord
 from aiuthor.memory.store import BookMemoryState, get_memory_store
+from aiuthor.observability.memory_audit import log_memory_io
 
 CallbackKind = Literal["echo", "foreshadow", "payoff", "motif"]
 
@@ -23,6 +24,11 @@ class CallbackIndex:
         st = self._state()
         with self._store._lock:
             st.callbacks.append(callback)
+        log_memory_io(
+            "write",
+            "callback_index",
+            f"append from={callback.from_chapter} to={callback.to_chapter}",
+        )
 
     def add_callback(
         self,
@@ -45,7 +51,10 @@ class CallbackIndex:
     def list_all(self) -> list[CallbackRecord]:
         st = self._state()
         with self._store._lock:
-            return list(st.callbacks)
+            n = len(st.callbacks)
+            rows = list(st.callbacks)
+        log_memory_io("read", "callback_index", f"list_all count={n}")
+        return rows
 
     def shift_chapters_after_insert(self, insert_after_chapter: int) -> int:
         """

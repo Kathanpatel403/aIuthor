@@ -7,6 +7,7 @@ from typing import Literal
 
 from aiuthor.memory.schemas import FactRecord
 from aiuthor.memory.store import BookMemoryState, get_memory_store
+from aiuthor.observability.memory_audit import log_memory_io
 
 
 class FactRegistry:
@@ -23,6 +24,7 @@ class FactRegistry:
         st = self._state()
         with self._store._lock:
             st.facts.append(fact)
+        log_memory_io("write", "fact_registry", f"append claim={fact.claim_text[:120]!r}")
 
     def add_fact(
         self,
@@ -47,7 +49,10 @@ class FactRegistry:
     def list_all(self) -> list[FactRecord]:
         st = self._state()
         with self._store._lock:
-            return list(st.facts)
+            n = len(st.facts)
+            rows = list(st.facts)
+        log_memory_io("read", "fact_registry", f"list_all count={n}")
+        return rows
 
     def list_for_chapter(self, chapter_number: int) -> list[FactRecord]:
         return [f for f in self.list_all() if f.chapter_number == chapter_number]

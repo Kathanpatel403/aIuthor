@@ -23,4 +23,6 @@ def run_fact_checker(text: str, fact_pack: ChapterFactPack, settings: Settings) 
         user=user,
         max_tokens=12000,
         temperature=0.2,
+        agent="fact_checker",
+        settings=settings,
     )

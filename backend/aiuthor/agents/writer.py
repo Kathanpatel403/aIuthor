@@ -47,4 +47,6 @@ def run_writer(
         user=user,
         max_tokens=12000,
         temperature=0.65,
+        agent="writer",
+        settings=settings,
     )

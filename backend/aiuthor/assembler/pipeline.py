@@ -10,12 +10,8 @@ from aiuthor.assembler.docx_builder import markdownish_to_docx
 from aiuthor.assembler.front_matter import static_front_matter_skeleton, toc_from_chapters
 from aiuthor.assembler.pdf_builder import markdownish_to_pdf
 from aiuthor.config.settings import Settings
+from aiuthor.paths import sample_books_dir
 from aiuthor.schemas.brief import BookOutline
-
-
-def repo_root() -> Path:
-    # backend/aiuthor/assembler/pipeline.py → parents[3] = repo root
-    return Path(__file__).resolve().parents[3]
 
 
 def assemble_book(
@@ -36,7 +32,7 @@ def assemble_book(
     back = static_back_matter(outline.title, book_id)
     full = "\n\n".join([front, body, back])
 
-    out_dir = repo_root() / "sample_books" / book_id
+    out_dir = sample_books_dir() / book_id
     out_dir.mkdir(parents=True, exist_ok=True)
     md_path = out_dir / "book.md"
     pdf_path = out_dir / "book.pdf"
