@@ -1,0 +1,8 @@
+# Phase 2+ will use Redis. Uncomment when ready.
+services:
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    profiles:
+      - full
