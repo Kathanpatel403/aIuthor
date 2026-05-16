@@ -1,16 +1,16 @@
-"""Humanizer → tightened prose (Sonnet)."""
+"""Humanizer → tightened prose (OpenAI chat)."""
 
 from __future__ import annotations
 
 from aiuthor.config.settings import Settings
 from aiuthor.humanizer.scorer import banned_phrase_catalog_for_prompts
-from aiuthor.orchestrator.llm import SONNET_MODEL, anthropic_client, completion_text
+from aiuthor.orchestrator.llm import completion_text, openai_client
 from aiuthor.prompts.humanizer_prompts import HUMANIZER_SYSTEM
 from aiuthor.tonality.cascader import cascade_system_modifier
 
 
 def run_humanizer(draft: str, tonality: str, settings: Settings) -> str:
-    if not settings.anthropic_api_key:
+    if not settings.openai_api_key:
         return draft
     tone = cascade_system_modifier("chapter_body", tonality)
     system = (
@@ -20,10 +20,10 @@ def run_humanizer(draft: str, tonality: str, settings: Settings) -> str:
         + "\n"
         + tone
     )
-    client = anthropic_client(settings)
+    client = openai_client(settings)
     return completion_text(
         client,
-        model=SONNET_MODEL,
+        model=settings.openai_chat_model,
         system=system,
         user=draft,
         max_tokens=12000,

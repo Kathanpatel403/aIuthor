@@ -239,7 +239,7 @@ demo_gateway/
 
 **Goal:** Every run emits a **trace bundle**.
 
-**Implemented:** timing spans per LangGraph step, Anthropic prompt + usage logs, memory-store audit hooks, USD ledger estimates — persisted under `demo_gateway/traces/{book_id}/`.
+**Implemented:** timing spans per LangGraph step, OpenAI prompt + usage logs, memory-store audit hooks, USD ledger estimates — persisted under `demo_gateway/traces/{book_id}/`.
 
 **Tasks / artifacts:**
 
@@ -341,7 +341,7 @@ demo_gateway/
 | 1 | `make run-backend` + `make run-frontend` + `/health` |
 | 2 | `make test-backend` + memory GET + insert-repair POST |
 | 3 | `make test` + `POST /api/rag/chapter-fact-pack` (`OPENAI_API_KEY`; optional Tavily + Pinecone for dense/rerank) |
-| 4 | `cascade_system_modifier` + `score_tonality_fidelity` (needs Anthropic for judge) |
+| 4 | `cascade_system_modifier` + `score_tonality_fidelity` (OpenAI mini judge) |
 | 5 | `POST /api/generate/pipeline/run` + LangGraph; outputs under `sample_books/{book_id}/` |
 | 6 | Pipeline run → `traces/{book_id}/manifest.json` + `GET /api/traces/{book_id}` |
 | 7 | `POST /api/evals/{book_id}` → `evals_report.json` |

@@ -1,4 +1,4 @@
-"""LLM-as-judge for AI-tell violations (Haiku)."""
+"""LLM-as-judge for AI-tell violations (OpenAI mini)."""
 
 from __future__ import annotations
 
@@ -7,16 +7,16 @@ import re
 
 from aiuthor.config.settings import Settings, get_settings
 from aiuthor.humanizer.rules import BANNED_PHRASES, list_violations
-from aiuthor.orchestrator.llm import HAIKU_MODEL, anthropic_client, completion_text
+from aiuthor.orchestrator.llm import completion_text, openai_client
 
 
 def ai_tell_violations_llm(text: str, *, settings: Settings | None = None) -> list[str]:
     """Combine deterministic scan + small judge pass."""
     base = list_violations(text)
     s = settings or get_settings()
-    if not s.anthropic_api_key or len(text) < 200:
+    if not s.openai_api_key or len(text) < 200:
         return base
-    client = anthropic_client(s)
+    client = openai_client(s)
     user = (
         "List AI-writing tells in the prose (filler, symmetric contrast, mechanical triads, "
         "over-signposting). Return JSON {\"tells\": [\"...\"] } only, max 12 items.\n\n"
@@ -24,7 +24,7 @@ def ai_tell_violations_llm(text: str, *, settings: Settings | None = None) -> li
     )
     raw = completion_text(
         client,
-        model=HAIKU_MODEL,
+        model=s.openai_chat_model_mini,
         system="Return JSON only.",
         user=user,
         max_tokens=400,

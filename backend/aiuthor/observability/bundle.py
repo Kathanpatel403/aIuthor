@@ -7,7 +7,6 @@ from pathlib import Path
 from typing import Any
 
 from aiuthor.observability.context import RunCollector
-from aiuthor.observability.token_cost_ledger import ledger_totals
 from aiuthor.paths import traces_dir
 
 
@@ -20,6 +19,10 @@ def save_trace_bundle(collector: RunCollector, *, export_paths: dict[str, str] |
       - token_cost_ledger.json
       - manifest.json
     """
+    # Lazy import: token_cost_ledger ↔ orchestrator.llm form a cycle at import time; importing
+    # it at module load would leave `bundle` half-initialized when dag (or others) import us.
+    from aiuthor.observability.token_cost_ledger import ledger_totals
+
     root = traces_dir(collector.book_id)
     root.mkdir(parents=True, exist_ok=True)
 

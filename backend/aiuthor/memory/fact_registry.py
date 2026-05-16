@@ -25,6 +25,7 @@ class FactRegistry:
         with self._store._lock:
             st.facts.append(fact)
         log_memory_io("write", "fact_registry", f"append claim={fact.claim_text[:120]!r}")
+        self._store.touch_persist(self._book_id)
 
     def add_fact(
         self,
@@ -69,4 +70,6 @@ class FactRegistry:
                 if f.chapter_number > insert_after_chapter:
                     f.chapter_number += 1
                     count += 1
+        if count:
+            self._store.touch_persist(self._book_id)
         return count

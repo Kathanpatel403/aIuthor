@@ -1,25 +1,40 @@
-"""Anthropic clients + message helpers (Phase 5) + observability hooks (Phase 6)."""
+"""OpenAI chat clients + completion helpers + observability hooks (Phase 5–6)."""
 
 from __future__ import annotations
 
-import anthropic
+import httpx
+from openai import OpenAI
 
 from aiuthor.config.settings import Settings
 from aiuthor.observability.prompt_logger import log_prompt
 from aiuthor.observability.token_cost_ledger import record_llm_usage
 
-SONNET_MODEL = "claude-sonnet-4-20250514"
-HAIKU_MODEL = "claude-haiku-4-5-20251001"
+__all__ = ["openai_client", "completion_text"]
 
 
-def anthropic_client(settings: Settings) -> anthropic.Anthropic:
-    if not settings.anthropic_api_key:
-        raise RuntimeError("ANTHROPIC_API_KEY is not configured")
-    return anthropic.Anthropic(api_key=settings.anthropic_api_key)
+def openai_client(settings: Settings) -> OpenAI:
+    """Shared OpenAI SDK client with explicit connect/read timeouts (avoids default short connect limit)."""
+    if not settings.openai_api_key:
+        raise RuntimeError("OPENAI_API_KEY is not configured")
+    timeout = httpx.Timeout(
+        connect=settings.openai_http_connect_timeout_seconds,
+        read=settings.openai_http_read_timeout_seconds,
+        write=120.0,
+        pool=10.0,
+    )
+    kwargs: dict = {
+        "api_key": settings.openai_api_key,
+        "timeout": timeout,
+        "max_retries": 2,
+    }
+    bu = (settings.openai_base_url or "").strip()
+    if bu:
+        kwargs["base_url"] = bu
+    return OpenAI(**kwargs)
 
 
 def completion_text(
-    client: anthropic.Anthropic,
+    client: OpenAI,
     *,
     model: str,
     system: str,
@@ -29,22 +44,21 @@ def completion_text(
     agent: str | None = None,
     settings: Settings | None = None,
 ) -> str:
-    msg = client.messages.create(
+    resp = client.chat.completions.create(
         model=model,
-        max_tokens=max_tokens,
         temperature=temperature,
-        system=system,
-        messages=[{"role": "user", "content": user}],
+        max_tokens=max_tokens,
+        messages=[
+            {"role": "system", "content": system},
+            {"role": "user", "content": user},
+        ],
     )
-    parts: list[str] = []
-    for block in msg.content:
-        if block.type == "text":
-            parts.append(block.text)
-    text = "".join(parts).strip()
+    choice = resp.choices[0].message
+    text = (choice.content or "").strip()
 
-    usage = getattr(msg, "usage", None)
-    inp = int(getattr(usage, "input_tokens", 0) or 0) if usage else 0
-    out = int(getattr(usage, "output_tokens", 0) or 0) if usage else 0
+    usage = getattr(resp, "usage", None)
+    inp = int(getattr(usage, "prompt_tokens", 0) or 0) if usage else 0
+    out = int(getattr(usage, "completion_tokens", 0) or 0) if usage else 0
 
     if agent:
         log_prompt(

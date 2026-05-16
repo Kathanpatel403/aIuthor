@@ -29,6 +29,7 @@ class CallbackIndex:
             "callback_index",
             f"append from={callback.from_chapter} to={callback.to_chapter}",
         )
+        self._store.touch_persist(self._book_id)
 
     def add_callback(
         self,
@@ -70,6 +71,8 @@ class CallbackIndex:
                 if cb.to_chapter > insert_after_chapter:
                     cb.to_chapter += 1
                     touched += 1
+        if touched:
+            self._store.touch_persist(self._book_id)
         return touched
 
     def trigger_repair_after_chapter_insert(self, insert_after_chapter: int) -> int:

@@ -9,7 +9,7 @@ except ImportError:  # pragma: no cover
 
 from langgraph.graph import END, StateGraph
 
-from aiuthor.observability.bundle import save_trace_bundle
+from aiuthor.api.pipeline_jobs import job_complete, job_fail
 from aiuthor.observability.context import pipeline_run_context, utc_iso
 from aiuthor.orchestrator.graph_nodes import (
     assemble_node,
@@ -37,6 +37,8 @@ def build_book_graph():
 
 
 def run_book_pipeline(book_id: str, brief_dict: dict) -> dict:
+    from aiuthor.observability.bundle import save_trace_bundle
+
     graph = build_book_graph()
     initial: BookPipelineState = {"book_id": book_id, "brief": brief_dict}
     with pipeline_run_context(book_id) as coll:
@@ -52,7 +54,15 @@ def run_book_pipeline(book_id: str, brief_dict: dict) -> dict:
                 }
             )
             save_trace_bundle(coll, export_paths={})
+            job_fail(book_id, f"{exc.__class__.__name__}: {exc}")
             raise
         bundle_paths = save_trace_bundle(coll, export_paths=result.get("export_paths"))
         result["trace_bundle_paths"] = bundle_paths
+        exp = result.get("export_paths") or {}
+        if exp:
+            job_complete(
+                book_id,
+                export_paths=dict(exp),
+                trace_bundle_paths=dict(bundle_paths),
+            )
         return result

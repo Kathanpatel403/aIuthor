@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import logging
+
 from aiuthor.config.settings import Settings, get_settings
 from aiuthor.rag.bm25_index import ChunkBM25Index
 from aiuthor.rag.corpus_session import chunk_map, list_chunks
@@ -15,7 +17,7 @@ from aiuthor.rag.sources.web_search import fetch_tavily_documents
 from aiuthor.rag.sources.wikipedia import fetch_wikipedia_documents
 from aiuthor.rag.vector_memory import get_memory_vector_index
 
-
+logger = logging.getLogger(__name__)
 def rag_namespace(book_id: str, slot: str | None) -> str:
     safe = (slot or "default").strip() or "default"
     return f"{book_id.strip()}:{safe}"
@@ -26,15 +28,26 @@ def gather_raw_documents(req: ChapterResearchRequest, settings: Settings) -> tup
     docs: list[RawDocument] = []
     if req.max_wiki_articles > 0:
         try:
-            docs.extend(
-                fetch_wikipedia_documents(
-                    req.chapter_topic,
-                    lang=req.wikipedia_lang,
-                    max_articles=req.max_wiki_articles,
-                )
+            wiki_docs = fetch_wikipedia_documents(
+                req.chapter_topic,
+                lang=req.wikipedia_lang,
+                max_articles=req.max_wiki_articles,
             )
+            docs.extend(wiki_docs)
+            if not wiki_docs:
+                warnings.append(
+                    "wikipedia_no_usable_articles_public_api_no_key_needed_check_network_or_topic"
+                )
+                logger.warning(
+                    "Wikipedia returned no documents for topic=%r lang=%s (see wikipedia.py min extract length)",
+                    req.chapter_topic[:200],
+                    req.wikipedia_lang,
+                )
+            else:
+                logger.info("Wikipedia ingested %d article(s) for this chapter topic", len(wiki_docs))
         except Exception as exc:  # noqa: BLE001
             warnings.append(f"wikipedia_failed:{exc.__class__.__name__}")
+            logger.warning("Wikipedia fetch failed: %s", exc)
     if req.max_tavily_results > 0:
         if settings.tavily_api_key:
             try:

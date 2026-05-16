@@ -1,3 +1,7 @@
-from aiuthor.orchestrator.dag import build_book_graph, run_book_pipeline
+"""Orchestration package (LangGraph DAG, LLM helpers, graph nodes).
 
-__all__ = ["build_book_graph", "run_book_pipeline"]
+Import concrete modules explicitly, e.g. `from aiuthor.orchestrator.dag import run_book_pipeline`,
+to avoid eager imports that create cycles with observability.
+"""
+
+__all__: list[str] = []

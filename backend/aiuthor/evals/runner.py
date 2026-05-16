@@ -2,17 +2,15 @@
 
 from __future__ import annotations
 
-import json
-from pathlib import Path
-
 from aiuthor.config.settings import Settings, get_settings
 from aiuthor.evals.ai_tell_detector import ai_tell_score
 from aiuthor.evals.callback_recall import callback_recall_score
 from aiuthor.evals.fact_coverage import fact_coverage_score
 from aiuthor.evals.schemas import DimensionScore, EvalReport
-from aiuthor.evals.structural_check import structural_score
+from aiuthor.assembler.book_io import html_to_plain, load_book_html
+from aiuthor.evals.structural_check import structural_score, structural_score_html
 from aiuthor.evals.tonality_eval import tonality_fidelity_score
-from aiuthor.paths import sample_books_dir, traces_dir
+from aiuthor.paths import traces_dir
 
 
 WEIGHTS = {
@@ -25,10 +23,11 @@ WEIGHTS = {
 
 
 def load_book_markdown(book_id: str) -> tuple[str, Path]:
-    md_path = sample_books_dir() / book_id / "book.md"
-    if not md_path.is_file():
-        raise FileNotFoundError(str(md_path))
-    return md_path.read_text(encoding="utf-8"), md_path
+    """Load book text for evals (HTML books converted to plain text)."""
+    raw, path = load_book_html(book_id)
+    if path.suffix.lower() == ".html":
+        return html_to_plain(raw), path
+    return raw, path
 
 
 def run_eval_suite(
@@ -39,15 +38,24 @@ def run_eval_suite(
     settings: Settings | None = None,
 ) -> EvalReport:
     s = settings or get_settings()
+    raw_html: str | None = None
     if markdown_override is not None:
         md = markdown_override
         src = "inline_override"
     else:
-        md, md_path = load_book_markdown(book_id)
+        raw, md_path = load_book_html(book_id)
         src = str(md_path)
+        if md_path.suffix.lower() == ".html":
+            raw_html = raw
+            md = html_to_plain(raw)
+        else:
+            md = raw
 
     failures: list[str] = []
-    struct_s, struct_d, missing = structural_score(md)
+    if raw_html is not None:
+        struct_s, struct_d, missing = structural_score_html(raw_html)
+    else:
+        struct_s, struct_d, missing = structural_score(md)
     if missing:
         failures.append(f"Missing headings: {', '.join(missing[:10])}")
 
