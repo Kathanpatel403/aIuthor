@@ -5,8 +5,7 @@ pydantic>=2.9.0,<3.0.0
 pydantic-settings>=2.6.0,<3.0.0
 langsmith>=0.2.0,<1.0.0
 
-# Phase 5 — agents / graph
-anthropic>=0.45.0,<1.0.0
+# Phase 5 — agents / graph (OpenAI chat; no Anthropic SDK)
 langgraph>=0.2.50,<0.3.0
 langchain-core>=0.3.0,<0.4.0
 
@@ -19,8 +18,12 @@ numpy>=2.0.0,<3.0.0
 rank-bm25>=0.2.2,<1.0.0
 pinecone>=5.0.0,<6.0.0
 
-# Phase 5 — exports
+# Phase 5 — exports (HTML → PDF/DOCX)
 python-docx>=1.1.0,<2.0.0
+markdown>=3.7.0,<4.0.0
+html2docx>=1.6.0,<2.0.0
+weasyprint>=62.0,<64.0
+xhtml2pdf>=0.2.16,<0.3.0
 fpdf2>=2.8.0,<3.0.0
 
 # Tests

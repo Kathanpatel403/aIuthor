@@ -20,6 +20,7 @@ def run_researcher(
     req = ChapterResearchRequest(
         book_id=book_id,
         chapter_topic=topic,
+        wikipedia_lang=settings.wikipedia_lang.strip() or "en",
         max_wiki_articles=max_wiki,
         max_tavily_results=max_tavily,
         ingest_namespace=f"ch{chapter.number}",

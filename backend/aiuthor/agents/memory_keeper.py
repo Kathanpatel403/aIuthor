@@ -1,4 +1,4 @@
-"""Memory keeper → in-memory stores (Haiku JSON)."""
+"""Memory keeper → in-memory stores (OpenAI chat JSON)."""
 
 from __future__ import annotations
 
@@ -9,7 +9,8 @@ import uuid
 from aiuthor.config.settings import Settings
 from aiuthor.memory import CallbackIndex, ConceptBible, DecisionLog, FactRegistry
 from aiuthor.memory.schemas import CallbackRecord, FactRecord, TonalitySurfaceRecord
-from aiuthor.orchestrator.llm import HAIKU_MODEL, anthropic_client, completion_text
+from aiuthor.memory.tonality_fingerprint import TonalityFingerprint
+from aiuthor.orchestrator.llm import completion_text, openai_client
 from aiuthor.prompts.memory_keeper_prompts import MEMORY_KEEPER_SYSTEM
 from aiuthor.rag.embeddings import embed_texts
 
@@ -21,12 +22,12 @@ def run_memory_keeper(
     tonality: str,
     settings: Settings,
 ) -> None:
-    if not settings.anthropic_api_key:
+    if not settings.openai_api_key:
         return
-    client = anthropic_client(settings)
+    client = openai_client(settings)
     raw = completion_text(
         client,
-        model=HAIKU_MODEL,
+        model=settings.openai_chat_model_mini,
         system=MEMORY_KEEPER_SYSTEM,
         user=f"chapter_number={chapter_number}\n\nCHAPTER_TEXT:\n{chapter_text[:24000]}",
         max_tokens=4096,

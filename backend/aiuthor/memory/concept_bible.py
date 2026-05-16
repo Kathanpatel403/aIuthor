@@ -27,10 +27,12 @@ class ConceptBible:
                 if c.term.lower() == concept.term.lower():
                     st.concepts[i] = concept
                     log_memory_io("write", "concept_bible", f"upsert replace term={concept.term[:80]}")
+                    self._store.touch_persist(self._book_id)
                     return concept
             st.concepts.append(concept)
             log_memory_io("write", "concept_bible", f"upsert append term={concept.term[:80]}")
-            return concept
+        self._store.touch_persist(self._book_id)
+        return concept
 
     def add_concept(
         self,
@@ -67,4 +69,6 @@ class ConceptBible:
                 if c.first_mentioned_chapter > insert_after_chapter:
                     c.first_mentioned_chapter += 1
                     count += 1
+        if count:
+            self._store.touch_persist(self._book_id)
         return count

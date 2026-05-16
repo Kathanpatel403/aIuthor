@@ -1,37 +1,61 @@
-"""Minimal PDF export (fpdf2) — English/Latin-1 friendly."""
+"""PDF export from HTML (WeasyPrint preferred; xhtml2pdf fallback)."""
 
 from __future__ import annotations
 
+import logging
 from pathlib import Path
 
-from fpdf import FPDF
+logger = logging.getLogger(__name__)
+
+
+def html_to_pdf(html: str, out_path: Path) -> None:
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    if _weasyprint_pdf(html, out_path):
+        return
+    if _xhtml2pdf(html, out_path):
+        return
+    raise RuntimeError(
+        "PDF export failed: install weasyprint (recommended) or xhtml2pdf. "
+        "See backend/requirements.txt."
+    )
+
+
+def _weasyprint_pdf(html: str, out_path: Path) -> bool:
+    try:
+        from weasyprint import HTML
+    except ImportError:
+        return False
+    try:
+        HTML(string=html, base_url=str(out_path.parent.resolve())).write_pdf(str(out_path))
+        return True
+    except Exception as exc:  # noqa: BLE001
+        logger.warning("WeasyPrint PDF failed (%s), trying fallback", exc)
+        return False
+
+
+def _xhtml2pdf(html: str, out_path: Path) -> bool:
+    try:
+        from xhtml2pdf import pisa
+    except ImportError:
+        return False
+    with open(out_path, "wb") as dest:
+        status = pisa.CreatePDF(html, dest=dest, encoding="utf-8")
+    if status.err:
+        logger.warning("xhtml2pdf reported errors for %s", out_path)
+    return out_path.is_file() and out_path.stat().st_size > 0
 
 
 def markdownish_to_pdf(text: str, out_path: Path) -> None:
-    pdf = FPDF()
-    pdf.set_auto_page_break(auto=True, margin=15)
-    pdf.add_page()
-    pdf.set_font("Helvetica", size=10)
-    for block in text.replace("\r\n", "\n").split("\n\n"):
-        for line in block.split("\n"):
-            safe = "".join(c if ord(c) < 128 else "?" for c in line)
-            if line.startswith("# "):
-                pdf.set_font("Helvetica", "B", 14)
-                pdf.multi_cell(0, 8, safe[2:].strip())
-                pdf.ln(2)
-                pdf.set_font("Helvetica", size=10)
-            elif line.startswith("## "):
-                pdf.set_font("Helvetica", "B", 12)
-                pdf.multi_cell(0, 7, safe[3:].strip())
-                pdf.ln(1)
-                pdf.set_font("Helvetica", size=10)
-            elif line.startswith("### "):
-                pdf.set_font("Helvetica", "B", 11)
-                pdf.multi_cell(0, 6, safe[4:].strip())
-                pdf.ln(1)
-                pdf.set_font("Helvetica", size=10)
-            else:
-                pdf.multi_cell(0, 5, safe)
-        pdf.ln(2)
-    out_path.parent.mkdir(parents=True, exist_ok=True)
-    pdf.output(str(out_path))
+    """Legacy wrapper: wrap plain text in minimal HTML."""
+    escaped = (
+        text.replace("&", "&amp;")
+        .replace("<", "&lt;")
+        .replace(">", "&gt;")
+    )
+    blocks = "".join(f"<p>{line}</p>" for line in escaped.split("\n\n") if line.strip())
+    html = (
+        "<!DOCTYPE html><html><head><meta charset='utf-8'/>"
+        "<style>body{font-family:Georgia,serif;font-size:11pt;line-height:1.5;margin:2cm;}</style>"
+        f"</head><body>{blocks}</body></html>"
+    )
+    html_to_pdf(html, out_path)

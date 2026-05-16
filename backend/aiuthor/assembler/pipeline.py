@@ -1,14 +1,11 @@
-"""Glue front matter, body, back matter; write PDF + DOCX."""
+"""Glue front matter, body, back matter; write HTML source + PDF + DOCX."""
 
 from __future__ import annotations
 
-from pathlib import Path
-
-from aiuthor.assembler.back_matter import static_back_matter
-from aiuthor.assembler.body import body_markdown
-from aiuthor.assembler.docx_builder import markdownish_to_docx
-from aiuthor.assembler.front_matter import static_front_matter_skeleton, toc_from_chapters
-from aiuthor.assembler.pdf_builder import markdownish_to_pdf
+from aiuthor.assembler.book_state import save_book_state
+from aiuthor.assembler.docx_builder import html_to_docx
+from aiuthor.assembler.html_builder import render_book_html
+from aiuthor.assembler.pdf_builder import html_to_pdf
 from aiuthor.config.settings import Settings
 from aiuthor.paths import sample_books_dir
 from aiuthor.schemas.brief import BookOutline
@@ -21,24 +18,34 @@ def assemble_book(
     settings: Settings,
 ) -> tuple[str, dict[str, str]]:
     """
-    Returns (full_markdown, paths{"markdown","pdf","docx"}).
+    Returns (html, paths with html/pdf/docx).
+
+    book.html is the canonical source for exports and preview.
+    outline.json + chapters.json are written for Test C / D reload.
     """
-    chapters_meta = [(c.number, c.title) for c in outline.chapters]
-    toc = toc_from_chapters(chapters_meta)
-    front = static_front_matter_skeleton(outline.title).replace("<!--TOC_PLACEHOLDER-->", toc.strip())
-    body = body_markdown(
-        [(c.number, c.title, chapter_bodies[i]) for i, c in enumerate(outline.chapters)]
-    )
-    back = static_back_matter(outline.title, book_id)
-    full = "\n\n".join([front, body, back])
+    _ = settings
+    html = render_book_html(book_id, outline, chapter_bodies)
 
     out_dir = sample_books_dir() / book_id
     out_dir.mkdir(parents=True, exist_ok=True)
-    md_path = out_dir / "book.md"
+    html_path = out_dir / "book.html"
     pdf_path = out_dir / "book.pdf"
     docx_path = out_dir / "book.docx"
-    md_path.write_text(full, encoding="utf-8")
-    markdownish_to_pdf(full, pdf_path)
-    markdownish_to_docx(full, docx_path)
-    paths = {"markdown": str(md_path), "pdf": str(pdf_path), "docx": str(docx_path)}
-    return full, paths
+
+    html_path.write_text(html, encoding="utf-8")
+    html_to_pdf(html, pdf_path)
+    html_to_docx(html, docx_path)
+
+    # Persist state for Test C (tone variants) and Test D (chapter insert)
+    save_book_state(book_id, outline, chapter_bodies)
+
+    legacy_md = out_dir / "book.md"
+    if legacy_md.is_file():
+        legacy_md.unlink()
+
+    paths = {
+        "html": str(html_path.resolve()),
+        "pdf": str(pdf_path.resolve()),
+        "docx": str(docx_path.resolve()),
+    }
+    return html, paths

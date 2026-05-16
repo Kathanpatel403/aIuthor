@@ -14,5 +14,5 @@ class BookPipelineState(TypedDict, total=False):
     artifacts: list[dict[str, Any]]
     errors: list[str]
     export_paths: dict[str, str]
-    assembled_markdown: str
+    assembled_html: str
     trace_bundle_paths: dict[str, str]

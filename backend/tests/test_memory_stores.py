@@ -1,5 +1,6 @@
 import pytest
 
+from aiuthor.config.settings import get_settings
 from aiuthor.memory import (
     CallbackIndex,
     ConceptBible,
@@ -13,9 +14,12 @@ from aiuthor.memory.store import reset_memory_store_for_tests
 
 
 @pytest.fixture(autouse=True)
-def _clean_store():
+def _clean_store(monkeypatch):
+    monkeypatch.setenv("AIUTHOR_MEMORY_PERSIST", "false")
+    get_settings.cache_clear()
     reset_memory_store_for_tests()
     yield
+    get_settings.cache_clear()
     reset_memory_store_for_tests()
 
 
@@ -69,3 +73,16 @@ def test_tonality_fingerprint_surface():
     )
     assert fp.get_surface("preface") is not None
     assert fp.get_surface("preface").exemplar_text == "Warm opener."
+
+
+def test_memory_persist_roundtrip(tmp_path, monkeypatch):
+    monkeypatch.setenv("AIUTHOR_MEMORY_PERSIST", "true")
+    monkeypatch.setenv("AIUTHOR_MEMORY_DATA_DIR", str(tmp_path))
+    get_settings.cache_clear()
+    reset_memory_store_for_tests()
+    FactRegistry("book-z").add_fact(chapter_number=1, claim_text="persisted claim")
+    assert (tmp_path / "book-z.json").is_file()
+    reset_memory_store_for_tests()
+    rows = FactRegistry("book-z").list_all()
+    assert len(rows) == 1
+    assert rows[0].claim_text == "persisted claim"

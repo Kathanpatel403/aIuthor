@@ -4,9 +4,8 @@ from __future__ import annotations
 
 from typing import Sequence
 
-from openai import OpenAI
-
 from aiuthor.config.settings import Settings, get_settings
+from aiuthor.orchestrator.llm import openai_client
 
 
 def embed_texts(
@@ -18,7 +17,7 @@ def embed_texts(
     s = settings or get_settings()
     if not s.openai_api_key:
         raise RuntimeError("OPENAI_API_KEY is required for embeddings")
-    client = OpenAI(api_key=s.openai_api_key)
+    client = openai_client(s)
     out: list[list[float]] = []
     for i in range(0, len(texts), batch_size):
         batch = list(texts[i : i + batch_size])

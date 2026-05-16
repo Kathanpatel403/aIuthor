@@ -14,3 +14,10 @@ def sample_books_dir() -> Path:
 
 def traces_dir(book_id: str) -> Path:
     return REPO_ROOT / "traces" / book_id
+
+
+def memory_data_dir() -> Path:
+    """Directory for optional JSON snapshots of the in-memory book memory store."""
+    d = REPO_ROOT / "memory_data"
+    d.mkdir(parents=True, exist_ok=True)
+    return d

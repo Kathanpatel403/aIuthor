@@ -1,4 +1,4 @@
-"""Planner → `BookOutline` JSON (Sonnet)."""
+"""Planner → `BookOutline` JSON (OpenAI chat)."""
 
 from __future__ import annotations
 
@@ -6,22 +6,22 @@ import json
 import re
 
 from aiuthor.config.settings import Settings
-from aiuthor.orchestrator.llm import SONNET_MODEL, anthropic_client, completion_text
+from aiuthor.orchestrator.llm import completion_text, openai_client
 from aiuthor.orchestrator.router import with_retries
 from aiuthor.prompts.planner_prompts import PLANNER_SYSTEM
 from aiuthor.schemas.brief import BookOutline, UserBrief
 
 
 def run_planner(brief: UserBrief, settings: Settings) -> BookOutline:
-    if not settings.anthropic_api_key:
-        raise RuntimeError("ANTHROPIC_API_KEY required for planner")
+    if not settings.openai_api_key:
+        raise RuntimeError("OPENAI_API_KEY required for planner")
 
     def _once() -> BookOutline:
-        client = anthropic_client(settings)
+        client = openai_client(settings)
         user = json.dumps(brief.model_dump(), indent=2)
         raw = completion_text(
             client,
-            model=SONNET_MODEL,
+            model=settings.openai_chat_model,
             system=PLANNER_SYSTEM,
             user=user,
             max_tokens=4096,

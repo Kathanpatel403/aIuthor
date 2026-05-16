@@ -23,6 +23,7 @@ class DecisionLog:
         with self._store._lock:
             st.decisions.append(entry)
         log_memory_io("write", "decision_log", f"append action={entry.action} agent={entry.agent}")
+        self._store.touch_persist(self._book_id)
         return entry
 
     def append_event(self, *, agent: str, action: str, details: dict[str, Any] | None = None) -> DecisionLogEntry:

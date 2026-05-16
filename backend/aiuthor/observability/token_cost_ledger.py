@@ -1,12 +1,11 @@
-"""Anthropic usage → USD estimates (configurable via Settings)."""
+"""OpenAI chat usage → USD estimates (configurable via Settings)."""
 
 from __future__ import annotations
 
 from typing import Any
 
 from aiuthor.config.settings import Settings, get_settings
-from aiuthor.observability.context import get_collector, get_current_agent, utc_iso
-from aiuthor.orchestrator.llm import HAIKU_MODEL, SONNET_MODEL
+from aiuthor.observability.context import get_collector, utc_iso
 
 
 def _estimate_cost_usd(
@@ -15,18 +14,25 @@ def _estimate_cost_usd(
     output_tokens: int,
     settings: Settings,
 ) -> float:
-    """Rough list pricing; override via env if Anthropic changes rates."""
-    # Defaults USD per million tokens (approximate placeholders — tune in production).
-    if SONNET_MODEL in model or "sonnet-4" in model.lower():
-        inp = settings.price_sonnet_input_per_mtok
-        out = settings.price_sonnet_output_per_mtok
-    elif HAIKU_MODEL in model or "haiku" in model.lower():
-        inp = settings.price_haiku_input_per_mtok
-        out = settings.price_haiku_output_per_mtok
+    """Rough public-list pricing; override via env if OpenAI changes rates."""
+    ml = model.lower()
+    mini_id = settings.openai_chat_model_mini.lower()
+    primary_id = settings.openai_chat_model.lower()
+    if ml == mini_id:
+        inp_rate = settings.price_openai_mini_input_per_mtok
+        out_rate = settings.price_openai_mini_output_per_mtok
+    elif ml == primary_id:
+        inp_rate = settings.price_openai_primary_input_per_mtok
+        out_rate = settings.price_openai_primary_output_per_mtok
     else:
-        inp = settings.price_sonnet_input_per_mtok
-        out = settings.price_sonnet_output_per_mtok
-    return (input_tokens / 1_000_000.0) * inp + (output_tokens / 1_000_000.0) * out
+        # Best-effort tier for snapshot / FT ids not matching configured names exactly
+        if "mini" in ml and ("gpt-4" in ml or "4o" in ml):
+            inp_rate = settings.price_openai_mini_input_per_mtok
+            out_rate = settings.price_openai_mini_output_per_mtok
+        else:
+            inp_rate = settings.price_openai_primary_input_per_mtok
+            out_rate = settings.price_openai_primary_output_per_mtok
+    return (input_tokens / 1_000_000.0) * inp_rate + (output_tokens / 1_000_000.0) * out_rate
 
 
 def record_llm_usage(

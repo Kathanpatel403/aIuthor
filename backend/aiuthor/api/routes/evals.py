@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 from typing import Literal
 
 from fastapi import APIRouter, HTTPException
@@ -9,6 +10,7 @@ from pydantic import BaseModel, Field
 
 from aiuthor.evals.runner import run_eval_suite
 from aiuthor.evals.schemas import EvalReport
+from aiuthor.paths import traces_dir
 
 router = APIRouter()
 
@@ -18,6 +20,25 @@ class EvalRequest(BaseModel):
 
 
 TonalityQuery = Literal["conversational", "academic", "storyteller", "motivational", "witty"]
+
+
+@router.get("/{book_id}/report", response_model=EvalReport)
+def get_eval_report(book_id: str) -> EvalReport:
+    """Return the last persisted eval report from traces/{book_id}/evals_report.json."""
+    bid = book_id.strip()
+    if not bid:
+        raise HTTPException(status_code=400, detail="book_id required")
+    path = traces_dir(bid) / "evals_report.json"
+    if not path.is_file():
+        raise HTTPException(
+            status_code=404,
+            detail="No eval report on disk yet — run POST /evals/{book_id} first",
+        )
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+        return EvalReport.model_validate(data)
+    except (json.JSONDecodeError, ValueError) as exc:
+        raise HTTPException(status_code=500, detail=f"Invalid eval report file: {exc}") from exc
 
 
 @router.post("/{book_id}", response_model=EvalReport)
@@ -38,5 +59,5 @@ def run_evals(
     except FileNotFoundError:
         raise HTTPException(
             status_code=404,
-            detail=f"book.md not found under sample_books/{bid}/ — generate the book first or pass markdown_override",
+            detail=f"book.html not found under sample_books/{bid}/ — generate the book first or pass markdown_override",
         ) from None

@@ -1,4 +1,4 @@
-"""LLM-as-judge: tonality fidelity 0–1 (cheap Haiku model)."""
+"""LLM-as-judge: tonality fidelity 0–1 (OpenAI mini)."""
 
 from __future__ import annotations
 
@@ -6,7 +6,7 @@ import json
 import re
 
 from aiuthor.config.settings import Settings, get_settings
-from aiuthor.orchestrator.llm import HAIKU_MODEL, anthropic_client, completion_text
+from aiuthor.orchestrator.llm import completion_text, openai_client
 
 
 def score_tonality_fidelity(
@@ -19,9 +19,9 @@ def score_tonality_fidelity(
     Returns a score in [0, 1]. On parse failure or missing API key, returns neutral 0.5.
     """
     s = settings or get_settings()
-    if not s.anthropic_api_key or len(text.strip()) < 40:
+    if not s.openai_api_key or len(text.strip()) < 40:
         return 0.5
-    client = anthropic_client(s)
+    client = openai_client(s)
     prompt = (
         "You evaluate whether prose matches a target tonality.\n"
         f"Target tonality id: {target_tonality}\n"
@@ -31,7 +31,7 @@ def score_tonality_fidelity(
     )
     raw = completion_text(
         client,
-        model=HAIKU_MODEL,
+        model=s.openai_chat_model_mini,
         system="You output valid JSON only.",
         user=prompt,
         max_tokens=256,

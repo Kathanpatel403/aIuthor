@@ -6,6 +6,7 @@ from aiuthor.memory.callback_index import CallbackIndex
 from aiuthor.memory.concept_bible import ConceptBible
 from aiuthor.memory.fact_registry import FactRegistry
 from aiuthor.memory.schemas import ChapterInsertRepairReport
+from aiuthor.memory.store import get_memory_store
 from aiuthor.observability.memory_audit import log_memory_io
 
 
@@ -30,4 +31,5 @@ def repair_after_chapter_insert(book_id: str, insert_after_chapter: int) -> Chap
         f"chapter_insert_after={insert_after_chapter} facts={facts} concepts={concepts} callbacks={callbacks}",
         agent="repair_pipeline",
     )
+    get_memory_store().touch_persist(book_id)
     return report

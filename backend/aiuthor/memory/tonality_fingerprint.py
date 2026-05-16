@@ -20,6 +20,7 @@ class TonalityFingerprint:
         with self._store._lock:
             st.tonality[record.surface] = record
         log_memory_io("write", "tonality_fingerprint", f"surface={record.surface}")
+        self._store.touch_persist(self._book_id)
         return record
 
     def get_surface(self, surface: str) -> TonalitySurfaceRecord | None:
