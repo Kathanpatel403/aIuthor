@@ -1,0 +1,27 @@
+{
+  "run_id": "86a912e5-0dec-414d-8e84-55c93ac79a0f",
+  "book_id": "86a912e5-0dec-414d-8e84-55c93ac79a0f",
+  "started_at": "2026-05-16T06:28:51.644730+00:00",
+  "files": {
+    "agent_trace": "C:\\Users\\katha\\Desktop\\demo_gateway\\traces\\86a912e5-0dec-414d-8e84-55c93ac79a0f\\agent_trace.json",
+    "prompts_log": "C:\\Users\\katha\\Desktop\\demo_gateway\\traces\\86a912e5-0dec-414d-8e84-55c93ac79a0f\\prompts.jsonl",
+    "memory_io_log": "C:\\Users\\katha\\Desktop\\demo_gateway\\traces\\86a912e5-0dec-414d-8e84-55c93ac79a0f\\memory_io.jsonl",
+    "token_cost_ledger": "C:\\Users\\katha\\Desktop\\demo_gateway\\traces\\86a912e5-0dec-414d-8e84-55c93ac79a0f\\token_cost_ledger.json"
+  },
+  "totals": {
+    "total_input_tokens": 5557,
+    "total_output_tokens": 4848,
+    "total_estimated_cost_usd": 0.0444
+  },
+  "export_paths": {
+    "markdown": "C:\\Users\\katha\\Desktop\\demo_gateway\\sample_books\\86a912e5-0dec-414d-8e84-55c93ac79a0f\\book.md",
+    "pdf": "C:\\Users\\katha\\Desktop\\demo_gateway\\sample_books\\86a912e5-0dec-414d-8e84-55c93ac79a0f\\book.pdf",
+    "docx": "C:\\Users\\katha\\Desktop\\demo_gateway\\sample_books\\86a912e5-0dec-414d-8e84-55c93ac79a0f\\book.docx"
+  },
+  "counts": {
+    "trace_events": 28,
+    "prompt_turns": 11,
+    "memory_io_events": 43,
+    "ledger_entries": 11
+  }
+}

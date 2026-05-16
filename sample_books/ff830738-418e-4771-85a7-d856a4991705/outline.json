@@ -1,0 +1,67 @@
+{
+  "title": "The Clockmaker's Secret: A Tale of Elias and Clara in Old Prague",
+  "subtitle": null,
+  "logline": "In the heart of old Prague, Elias and Clara unravel the mysteries of a forgotten clockmaker, uncovering secrets that could change their lives forever.",
+  "audience": "Lovers of historical fiction and mystery",
+  "genre": "Novella",
+  "default_tonality": "storyteller",
+  "themes": [
+    "mystery",
+    "history",
+    "friendship",
+    "secrets",
+    "adventure"
+  ],
+  "chapters": [
+    {
+      "number": 1,
+      "title": "The Arrival in Prague",
+      "summary": "Elias and Clara arrive in Prague, drawn by tales of an enigmatic clockmaker. They explore the city's winding streets and stumble upon an old workshop that holds more than meets the eye.",
+      "key_points": [
+        "Elias and Clara's arrival",
+        "Introduction to Prague's history",
+        "Discovery of the clockmaker's workshop"
+      ]
+    },
+    {
+      "number": 2,
+      "title": "The Workshop's Whisper",
+      "summary": "Inside the workshop, Elias and Clara find a series of cryptic notes and intricate clock designs. They begin to piece together the clockmaker's mysterious past and his connection to Prague's legends.",
+      "key_points": [
+        "Exploration of the workshop",
+        "Discovery of cryptic notes",
+        "Introduction to Prague's legends"
+      ]
+    },
+    {
+      "number": 3,
+      "title": "Unveiling the Past",
+      "summary": "As Elias and Clara delve deeper, they uncover the clockmaker's hidden life, including his ties to a secret society. Their investigation leads them to a forgotten part of the city where history and mystery intertwine.",
+      "key_points": [
+        "Investigation of the clockmaker's life",
+        "Discovery of a secret society",
+        "Exploration of a forgotten part of Prague"
+      ]
+    },
+    {
+      "number": 4,
+      "title": "The Secret Society",
+      "summary": "Elias and Clara infiltrate the secret society, uncovering its role in safeguarding ancient knowledge. They learn of a powerful artifact linked to the clockmaker that could alter the course of history.",
+      "key_points": [
+        "Infiltration of the secret society",
+        "Revelation of the society's purpose",
+        "Discovery of a powerful artifact"
+      ]
+    },
+    {
+      "number": 5,
+      "title": "The Clockmaker's Legacy",
+      "summary": "In a race against time, Elias and Clara must decide how to handle the artifact. Their choices will determine whether the clockmaker's legacy brings enlightenment or chaos to Prague.",
+      "key_points": [
+        "Decision on handling the artifact",
+        "Potential impact on Prague",
+        "Resolution of the clockmaker's legacy"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{"ts": "2026-05-16T04:09:12.387593+00:00", "agent": "editor", "direction": "read", "store": "callback_index", "detail": "list_all count=0", "extra": {}}
+{"ts": "2026-05-16T04:09:31.989856+00:00", "agent": "memory_keeper", "direction": "write", "store": "fact_registry", "detail": "append claim='Vector databases are like advanced sorting machines for the digital world.'", "extra": {}}
+{"ts": "2026-05-16T04:09:31.989856+00:00", "agent": "memory_keeper", "direction": "write", "store": "fact_registry", "detail": "append claim=\"Vector databases handle data that doesn't fit neatly into rows and columns.\"", "extra": {}}
+{"ts": "2026-05-16T04:09:31.989856+00:00", "agent": "memory_keeper", "direction": "write", "store": "fact_registry", "detail": "append claim='Vector databases organize data with vectors, which are lists of numbers.'", "extra": {}}
+{"ts": "2026-05-16T04:09:31.989856+00:00", "agent": "memory_keeper", "direction": "write", "store": "fact_registry", "detail": "append claim='Vector databases are suitable for managing large amounts of unstructured data.'", "extra": {}}
+{"ts": "2026-05-16T04:09:31.989856+00:00", "agent": "memory_keeper", "direction": "write", "store": "fact_registry", "detail": "append claim='Traditional databases are effective for managing structured data.'", "extra": {}}
+{"ts": "2026-05-16T04:09:31.989856+00:00", "agent": "memory_keeper", "direction": "write", "store": "fact_registry", "detail": "append claim='Traditional databases can be less efficient when performing complex searches on unstructured data.'", "extra": {}}
+{"ts": "2026-05-16T04:09:31.989856+00:00", "agent": "memory_keeper", "direction": "write", "store": "fact_registry", "detail": "append claim='Vector databases are optimized for quick similarity searches.'", "extra": {}}
+{"ts": "2026-05-16T04:09:31.989856+00:00", "agent": "memory_keeper", "direction": "write", "store": "fact_registry", "detail": "append claim='Vector databases allow you to find data points that are similar in a relatively short time.'", "extra": {}}
+{"ts": "2026-05-16T04:09:31.989856+00:00", "agent": "memory_keeper", "direction": "write", "store": "fact_registry", "detail": "append claim='The ability to efficiently process and retrieve unstructured data is increasingly important.'", "extra": {}}
+{"ts": "2026-05-16T04:09:31.989856+00:00", "agent": "memory_keeper", "direction": "write", "store": "fact_registry", "detail": "append claim='Vector databases can offer a robust solution for recommendation systems and image recognition.'", "extra": {}}
+{"ts": "2026-05-16T04:09:31.989856+00:00", "agent": "memory_keeper", "direction": "write", "store": "fact_registry", "detail": "append claim='Vector databases provide a pathway to faster, more effective data processing.'", "extra": {}}
+{"ts": "2026-05-16T04:09:31.989856+00:00", "agent": "memory_keeper", "direction": "write", "store": "concept_bible", "detail": "upsert append term=Vector Database", "extra": {}}
+{"ts": "2026-05-16T04:09:31.989856+00:00", "agent": "memory_keeper", "direction": "write", "store": "concept_bible", "detail": "upsert append term=Structured Data", "extra": {}}
+{"ts": "2026-05-16T04:09:31.989856+00:00", "agent": "memory_keeper", "direction": "write", "store": "concept_bible", "detail": "upsert append term=Unstructured Data", "extra": {}}
+{"ts": "2026-05-16T04:09:31.989856+00:00", "agent": "memory_keeper", "direction": "write", "store": "concept_bible", "detail": "upsert append term=Similarity Search", "extra": {}}
+{"ts": "2026-05-16T04:09:31.989856+00:00", "agent": "memory_keeper", "direction": "write", "store": "concept_bible", "detail": "upsert append term=Recommendation Systems", "extra": {}}
+{"ts": "2026-05-16T04:09:31.989856+00:00", "agent": "memory_keeper", "direction": "write", "store": "concept_bible", "detail": "upsert append term=Image Recognition", "extra": {}}
+{"ts": "2026-05-16T04:09:31.989856+00:00", "agent": "memory_keeper", "direction": "write", "store": "decision_log", "detail": "append action=chapter_commit agent=memory_keeper", "extra": {}}
+{"ts": "2026-05-16T04:09:32.539185+00:00", "agent": "memory_keeper", "direction": "write", "store": "tonality_fingerprint", "detail": "surface=chapter_body:1", "extra": {}}
+{"ts": "2026-05-16T04:09:41.164924+00:00", "agent": "editor", "direction": "read", "store": "callback_index", "detail": "list_all count=0", "extra": {}}
+{"ts": "2026-05-16T04:09:59.720685+00:00", "agent": "memory_keeper", "direction": "write", "store": "concept_bible", "detail": "upsert append term=vector databases", "extra": {}}
+{"ts": "2026-05-16T04:09:59.720685+00:00", "agent": "memory_keeper", "direction": "write", "store": "concept_bible", "detail": "upsert append term=Python", "extra": {}}
+{"ts": "2026-05-16T04:09:59.720685+00:00", "agent": "memory_keeper", "direction": "write", "store": "concept_bible", "detail": "upsert append term=Faiss", "extra": {}}
+{"ts": "2026-05-16T04:09:59.720685+00:00", "agent": "memory_keeper", "direction": "write", "store": "concept_bible", "detail": "upsert append term=Annoy", "extra": {}}
+{"ts": "2026-05-16T04:09:59.720685+00:00", "agent": "memory_keeper", "direction": "write", "store": "concept_bible", "detail": "upsert append term=vectors", "extra": {}}
+{"ts": "2026-05-16T04:09:59.720685+00:00", "agent": "memory_keeper", "direction": "write", "store": "concept_bible", "detail": "upsert append term=nearest neighbors", "extra": {}}
+{"ts": "2026-05-16T04:09:59.720685+00:00", "agent": "memory_keeper", "direction": "write", "store": "concept_bible", "detail": "upsert append term=embeddings", "extra": {}}
+{"ts": "2026-05-16T04:09:59.720685+00:00", "agent": "memory_keeper", "direction": "write", "store": "concept_bible", "detail": "upsert replace term=recommendation systems", "extra": {}}
+{"ts": "2026-05-16T04:09:59.720685+00:00", "agent": "memory_keeper", "direction": "write", "store": "concept_bible", "detail": "upsert append term=clustering tasks", "extra": {}}
+{"ts": "2026-05-16T04:09:59.720685+00:00", "agent": "memory_keeper", "direction": "write", "store": "concept_bible", "detail": "upsert append term=personalization", "extra": {}}
+{"ts": "2026-05-16T04:09:59.720685+00:00", "agent": "memory_keeper", "direction": "write", "store": "concept_bible", "detail": "upsert append term=music playlist", "extra": {}}
+{"ts": "2026-05-16T04:09:59.720685+00:00", "agent": "memory_keeper", "direction": "write", "store": "callback_index", "detail": "append from=1 to=2", "extra": {}}
+{"ts": "2026-05-16T04:09:59.720685+00:00", "agent": "memory_keeper", "direction": "write", "store": "callback_index", "detail": "append from=1 to=2", "extra": {}}
+{"ts": "2026-05-16T04:09:59.720685+00:00", "agent": "memory_keeper", "direction": "write", "store": "callback_index", "detail": "append from=1 to=2", "extra": {}}
+{"ts": "2026-05-16T04:09:59.720685+00:00", "agent": "memory_keeper", "direction": "write", "store": "callback_index", "detail": "append from=1 to=2", "extra": {}}
+{"ts": "2026-05-16T04:09:59.720685+00:00", "agent": "memory_keeper", "direction": "write", "store": "decision_log", "detail": "append action=chapter_commit agent=memory_keeper", "extra": {}}
+{"ts": "2026-05-16T04:10:00.881870+00:00", "agent": "memory_keeper", "direction": "write", "store": "tonality_fingerprint", "detail": "surface=chapter_body:2", "extra": {}}
+{"ts": "2026-05-16T04:10:00.883836+00:00", "agent": "assembler", "direction": "read", "store": "concept_bible", "detail": "list_all count=16", "extra": {}}

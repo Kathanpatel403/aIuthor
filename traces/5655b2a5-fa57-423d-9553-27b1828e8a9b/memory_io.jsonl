@@ -1,0 +1,34 @@
+{"ts": "2026-05-16T08:57:38.341384+00:00", "agent": "editor", "direction": "read", "store": "callback_index", "detail": "list_all count=0", "extra": {}}
+{"ts": "2026-05-16T08:57:55.643089+00:00", "agent": "memory_keeper", "direction": "write", "store": "fact_registry", "detail": "append claim='Assessing your current financial situation is like checking the weather before a big trip.'", "extra": {}}
+{"ts": "2026-05-16T08:57:55.646089+00:00", "agent": "memory_keeper", "direction": "write", "store": "fact_registry", "detail": "append claim='Setting clear, realistic goals can provide direction for your finances.'", "extra": {}}
+{"ts": "2026-05-16T08:57:55.649089+00:00", "agent": "memory_keeper", "direction": "write", "store": "fact_registry", "detail": "append claim='A budget is your financial blueprint.'", "extra": {}}
+{"ts": "2026-05-16T08:57:55.651602+00:00", "agent": "memory_keeper", "direction": "write", "store": "fact_registry", "detail": "append claim='A solid budget helps you track expenses and manage savings.'", "extra": {}}
+{"ts": "2026-05-16T08:57:55.653999+00:00", "agent": "memory_keeper", "direction": "write", "store": "fact_registry", "detail": "append claim='Understanding the basics of finance lays the foundation for your financial journey.'", "extra": {}}
+{"ts": "2026-05-16T08:57:55.656132+00:00", "agent": "memory_keeper", "direction": "write", "store": "concept_bible", "detail": "upsert append term=financial landscape", "extra": {}}
+{"ts": "2026-05-16T08:57:55.658742+00:00", "agent": "memory_keeper", "direction": "write", "store": "concept_bible", "detail": "upsert append term=financial goals", "extra": {}}
+{"ts": "2026-05-16T08:57:55.660361+00:00", "agent": "memory_keeper", "direction": "write", "store": "concept_bible", "detail": "upsert append term=budget", "extra": {}}
+{"ts": "2026-05-16T08:57:55.663332+00:00", "agent": "memory_keeper", "direction": "write", "store": "concept_bible", "detail": "upsert append term=financial journey", "extra": {}}
+{"ts": "2026-05-16T08:57:55.665040+00:00", "agent": "memory_keeper", "direction": "write", "store": "decision_log", "detail": "append action=chapter_commit agent=memory_keeper", "extra": {}}
+{"ts": "2026-05-16T08:57:56.538420+00:00", "agent": "memory_keeper", "direction": "write", "store": "tonality_fingerprint", "detail": "surface=chapter_body:1", "extra": {}}
+{"ts": "2026-05-16T08:58:01.268955+00:00", "agent": "writer", "direction": "read", "store": "callback_index", "detail": "list_all count=0", "extra": {}}
+{"ts": "2026-05-16T08:58:01.268955+00:00", "agent": "writer", "direction": "read", "store": "concept_bible", "detail": "list_all count=4", "extra": {}}
+{"ts": "2026-05-16T08:58:08.732463+00:00", "agent": "editor", "direction": "read", "store": "callback_index", "detail": "list_all count=0", "extra": {}}
+{"ts": "2026-05-16T08:58:39.080431+00:00", "agent": "memory_keeper", "direction": "write", "store": "fact_registry", "detail": "append claim='Investing is like planting seeds for future financial success.'", "extra": {}}
+{"ts": "2026-05-16T08:58:39.091756+00:00", "agent": "memory_keeper", "direction": "write", "store": "fact_registry", "detail": "append claim='A diversified portfolio spreads investments across different vehicles to balance risk and potential return.'", "extra": {}}
+{"ts": "2026-05-16T08:58:39.100805+00:00", "agent": "memory_keeper", "direction": "write", "store": "fact_registry", "detail": "append claim='Stocks represent ownership in a company and can be volatile.'", "extra": {}}
+{"ts": "2026-05-16T08:58:39.105116+00:00", "agent": "memory_keeper", "direction": "write", "store": "fact_registry", "detail": "append claim='Bonds tend to offer more predictable returns and are generally considered safer than stocks.'", "extra": {}}
+{"ts": "2026-05-16T08:58:39.109995+00:00", "agent": "memory_keeper", "direction": "write", "store": "fact_registry", "detail": "append claim='Real estate can provide both income and appreciation but often requires more upfront commitment.'", "extra": {}}
+{"ts": "2026-05-16T08:58:39.113826+00:00", "agent": "memory_keeper", "direction": "write", "store": "fact_registry", "detail": "append claim='Understanding personal risk tolerance is key to investing.'", "extra": {}}
+{"ts": "2026-05-16T08:58:39.117464+00:00", "agent": "memory_keeper", "direction": "write", "store": "fact_registry", "detail": "append claim='A diversified portfolio is compared to a well-balanced meal for maintaining financial health.'", "extra": {}}
+{"ts": "2026-05-16T08:58:39.121583+00:00", "agent": "memory_keeper", "direction": "write", "store": "concept_bible", "detail": "upsert append term=Investing", "extra": {}}
+{"ts": "2026-05-16T08:58:39.125754+00:00", "agent": "memory_keeper", "direction": "write", "store": "concept_bible", "detail": "upsert append term=Diversified Portfolio", "extra": {}}
+{"ts": "2026-05-16T08:58:39.130525+00:00", "agent": "memory_keeper", "direction": "write", "store": "concept_bible", "detail": "upsert append term=Stocks", "extra": {}}
+{"ts": "2026-05-16T08:58:39.133532+00:00", "agent": "memory_keeper", "direction": "write", "store": "concept_bible", "detail": "upsert append term=Bonds", "extra": {}}
+{"ts": "2026-05-16T08:58:39.186017+00:00", "agent": "memory_keeper", "direction": "write", "store": "concept_bible", "detail": "upsert append term=Real Estate", "extra": {}}
+{"ts": "2026-05-16T08:58:39.189937+00:00", "agent": "memory_keeper", "direction": "write", "store": "concept_bible", "detail": "upsert append term=Risk Tolerance", "extra": {}}
+{"ts": "2026-05-16T08:58:39.193231+00:00", "agent": "memory_keeper", "direction": "write", "store": "concept_bible", "detail": "upsert append term=Financial Health", "extra": {}}
+{"ts": "2026-05-16T08:58:39.196883+00:00", "agent": "memory_keeper", "direction": "write", "store": "decision_log", "detail": "append action=chapter_commit agent=memory_keeper", "extra": {}}
+{"ts": "2026-05-16T08:58:39.709028+00:00", "agent": "memory_keeper", "direction": "write", "store": "tonality_fingerprint", "detail": "surface=chapter_body:2", "extra": {}}
+{"ts": "2026-05-16T08:58:39.720268+00:00", "agent": "assembler", "direction": "read", "store": "concept_bible", "detail": "list_all count=11", "extra": {}}
+{"ts": "2026-05-16T08:58:39.720268+00:00", "agent": "assembler", "direction": "read", "store": "fact_registry", "detail": "list_all count=12", "extra": {}}
+{"ts": "2026-05-16T08:58:39.754702+00:00", "agent": "assembler", "direction": "read", "store": "concept_bible", "detail": "list_all count=11", "extra": {}}

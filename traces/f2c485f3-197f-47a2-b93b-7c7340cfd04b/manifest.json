@@ -1,0 +1,23 @@
+{
+  "run_id": "f2c485f3-197f-47a2-b93b-7c7340cfd04b",
+  "book_id": "f2c485f3-197f-47a2-b93b-7c7340cfd04b",
+  "started_at": "2026-05-16T04:44:31.089851+00:00",
+  "files": {
+    "agent_trace": "C:\\Users\\katha\\Desktop\\demo_gateway\\traces\\f2c485f3-197f-47a2-b93b-7c7340cfd04b\\agent_trace.json",
+    "prompts_log": "C:\\Users\\katha\\Desktop\\demo_gateway\\traces\\f2c485f3-197f-47a2-b93b-7c7340cfd04b\\prompts.jsonl",
+    "memory_io_log": "C:\\Users\\katha\\Desktop\\demo_gateway\\traces\\f2c485f3-197f-47a2-b93b-7c7340cfd04b\\memory_io.jsonl",
+    "token_cost_ledger": "C:\\Users\\katha\\Desktop\\demo_gateway\\traces\\f2c485f3-197f-47a2-b93b-7c7340cfd04b\\token_cost_ledger.json"
+  },
+  "totals": {
+    "total_input_tokens": 0,
+    "total_output_tokens": 0,
+    "total_estimated_cost_usd": 0
+  },
+  "export_paths": {},
+  "counts": {
+    "trace_events": 3,
+    "prompt_turns": 0,
+    "memory_io_events": 0,
+    "ledger_entries": 0
+  }
+}
