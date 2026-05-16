@@ -1,0 +1,41 @@
+{
+  "book_id": "15128c90-2b42-4330-b0bf-d8ab9be0f8a7",
+  "markdown_source": "C:\\Users\\katha\\Desktop\\demo_gateway\\sample_books\\15128c90-2b42-4330-b0bf-d8ab9be0f8a7\\book.html",
+  "overall_score": 0.7054,
+  "dimensions": [
+    {
+      "name": "structural",
+      "score": 0.875,
+      "weight": 0.25,
+      "detail": "14/16 structural sections present (HTML)"
+    },
+    {
+      "name": "tonality_fidelity",
+      "score": 0.6580266843112278,
+      "weight": 0.2,
+      "detail": "embedding_cosine_mapped preset=storyteller"
+    },
+    {
+      "name": "ai_tell_density",
+      "score": 1.0,
+      "weight": 0.2,
+      "detail": "0 deterministic violations; samples: []"
+    },
+    {
+      "name": "callback_recall",
+      "score": 0.5,
+      "weight": 0.15,
+      "detail": "body_chapters_not_parsed"
+    },
+    {
+      "name": "fact_coverage",
+      "score": 0.4,
+      "weight": 0.2,
+      "detail": "body_too_short_for_coverage_check"
+    }
+  ],
+  "failure_analysis": [
+    "Missing headings: Foreword, Acknowledgments"
+  ],
+  "rubric_version": "aiuthor-eval-v1"
+}

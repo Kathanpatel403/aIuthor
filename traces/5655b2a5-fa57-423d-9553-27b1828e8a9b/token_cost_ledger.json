@@ -1,0 +1,97 @@
+{
+  "entries": [
+    {
+      "ts": "2026-05-16T08:57:23.172852+00:00",
+      "agent": "planner",
+      "model": "gpt-4o",
+      "input_tokens": 249,
+      "output_tokens": 296,
+      "estimated_cost_usd": 0.003582
+    },
+    {
+      "ts": "2026-05-16T08:57:35.760094+00:00",
+      "agent": "writer",
+      "model": "gpt-4o",
+      "input_tokens": 775,
+      "output_tokens": 255,
+      "estimated_cost_usd": 0.004488
+    },
+    {
+      "ts": "2026-05-16T08:57:38.340271+00:00",
+      "agent": "humanizer",
+      "model": "gpt-4o",
+      "input_tokens": 582,
+      "output_tokens": 255,
+      "estimated_cost_usd": 0.004005
+    },
+    {
+      "ts": "2026-05-16T08:57:40.558856+00:00",
+      "agent": "editor",
+      "model": "gpt-4o",
+      "input_tokens": 466,
+      "output_tokens": 255,
+      "estimated_cost_usd": 0.003715
+    },
+    {
+      "ts": "2026-05-16T08:57:47.150970+00:00",
+      "agent": "fact_checker",
+      "model": "gpt-4o",
+      "input_tokens": 331,
+      "output_tokens": 256,
+      "estimated_cost_usd": 0.003387
+    },
+    {
+      "ts": "2026-05-16T08:57:55.643089+00:00",
+      "agent": "memory_keeper",
+      "model": "gpt-4o-mini",
+      "input_tokens": 419,
+      "output_tokens": 384,
+      "estimated_cost_usd": 0.000293
+    },
+    {
+      "ts": "2026-05-16T08:58:05.928742+00:00",
+      "agent": "writer",
+      "model": "gpt-4o",
+      "input_tokens": 943,
+      "output_tokens": 313,
+      "estimated_cost_usd": 0.005488
+    },
+    {
+      "ts": "2026-05-16T08:58:08.732463+00:00",
+      "agent": "humanizer",
+      "model": "gpt-4o",
+      "input_tokens": 640,
+      "output_tokens": 308,
+      "estimated_cost_usd": 0.00468
+    },
+    {
+      "ts": "2026-05-16T08:58:19.136630+00:00",
+      "agent": "editor",
+      "model": "gpt-4o",
+      "input_tokens": 519,
+      "output_tokens": 308,
+      "estimated_cost_usd": 0.004378
+    },
+    {
+      "ts": "2026-05-16T08:58:26.226087+00:00",
+      "agent": "fact_checker",
+      "model": "gpt-4o",
+      "input_tokens": 389,
+      "output_tokens": 306,
+      "estimated_cost_usd": 0.004033
+    },
+    {
+      "ts": "2026-05-16T08:58:39.079919+00:00",
+      "agent": "memory_keeper",
+      "model": "gpt-4o-mini",
+      "input_tokens": 469,
+      "output_tokens": 627,
+      "estimated_cost_usd": 0.000447
+    }
+  ],
+  "totals": {
+    "total_input_tokens": 5782,
+    "total_output_tokens": 3563,
+    "total_estimated_cost_usd": 0.0385
+  }
+}

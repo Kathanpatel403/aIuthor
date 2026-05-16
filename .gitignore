@@ -54,15 +54,8 @@ frontend/.vite/
 Thumbs.db
 .DS_Store
 
-# Traces / generated books
-traces/**/*
-!traces/.gitkeep
 
-# Persisted book memory (facts / concepts / callbacks snapshots)
-memory_data/**/*
-!memory_data/.gitkeep
-sample_books/**/*
-!sample_books/.gitkeep
+
 
 # WeasyPrint / temp
 *.pdf

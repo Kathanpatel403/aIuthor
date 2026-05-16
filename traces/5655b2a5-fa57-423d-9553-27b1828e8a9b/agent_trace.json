@@ -1,0 +1,222 @@
+{
+  "events": [
+    {
+      "ts": "2026-05-16T08:57:18.849231+00:00",
+      "step": "planner",
+      "agent": "planner",
+      "phase": "start"
+    },
+    {
+      "ts": "2026-05-16T08:57:23.173881+00:00",
+      "step": "planner",
+      "agent": "planner",
+      "phase": "end",
+      "duration_ms": 4323.93
+    },
+    {
+      "ts": "2026-05-16T08:57:23.174404+00:00",
+      "step": "researcher",
+      "agent": "researcher",
+      "phase": "start",
+      "extra": {
+        "chapter": 1
+      }
+    },
+    {
+      "ts": "2026-05-16T08:57:30.924176+00:00",
+      "step": "researcher",
+      "agent": "researcher",
+      "phase": "end",
+      "duration_ms": 7749.83
+    },
+    {
+      "ts": "2026-05-16T08:57:30.924793+00:00",
+      "step": "writer",
+      "agent": "writer",
+      "phase": "start",
+      "extra": {
+        "chapter": 1
+      }
+    },
+    {
+      "ts": "2026-05-16T08:57:35.760094+00:00",
+      "step": "writer",
+      "agent": "writer",
+      "phase": "end",
+      "duration_ms": 4836.08
+    },
+    {
+      "ts": "2026-05-16T08:57:35.760094+00:00",
+      "step": "humanizer",
+      "agent": "humanizer",
+      "phase": "start",
+      "extra": {
+        "chapter": 1
+      }
+    },
+    {
+      "ts": "2026-05-16T08:57:38.340271+00:00",
+      "step": "humanizer",
+      "agent": "humanizer",
+      "phase": "end",
+      "duration_ms": 2579.82
+    },
+    {
+      "ts": "2026-05-16T08:57:38.340271+00:00",
+      "step": "editor",
+      "agent": "editor",
+      "phase": "start",
+      "extra": {
+        "chapter": 1
+      }
+    },
+    {
+      "ts": "2026-05-16T08:57:40.558856+00:00",
+      "step": "editor",
+      "agent": "editor",
+      "phase": "end",
+      "duration_ms": 2218.77
+    },
+    {
+      "ts": "2026-05-16T08:57:40.558856+00:00",
+      "step": "fact_checker",
+      "agent": "fact_checker",
+      "phase": "start",
+      "extra": {
+        "chapter": 1
+      }
+    },
+    {
+      "ts": "2026-05-16T08:57:47.150970+00:00",
+      "step": "fact_checker",
+      "agent": "fact_checker",
+      "phase": "end",
+      "duration_ms": 6592.33
+    },
+    {
+      "ts": "2026-05-16T08:57:47.150970+00:00",
+      "step": "memory_keeper",
+      "agent": "memory_keeper",
+      "phase": "start",
+      "extra": {
+        "chapter": 1
+      }
+    },
+    {
+      "ts": "2026-05-16T08:57:56.543765+00:00",
+      "step": "memory_keeper",
+      "agent": "memory_keeper",
+      "phase": "end",
+      "duration_ms": 9392.81
+    },
+    {
+      "ts": "2026-05-16T08:57:56.545127+00:00",
+      "step": "researcher",
+      "agent": "researcher",
+      "phase": "start",
+      "extra": {
+        "chapter": 2
+      }
+    },
+    {
+      "ts": "2026-05-16T08:58:01.268955+00:00",
+      "step": "researcher",
+      "agent": "researcher",
+      "phase": "end",
+      "duration_ms": 4723.5
+    },
+    {
+      "ts": "2026-05-16T08:58:01.268955+00:00",
+      "step": "writer",
+      "agent": "writer",
+      "phase": "start",
+      "extra": {
+        "chapter": 2
+      }
+    },
+    {
+      "ts": "2026-05-16T08:58:05.928742+00:00",
+      "step": "writer",
+      "agent": "writer",
+      "phase": "end",
+      "duration_ms": 4659.16
+    },
+    {
+      "ts": "2026-05-16T08:58:05.928742+00:00",
+      "step": "humanizer",
+      "agent": "humanizer",
+      "phase": "start",
+      "extra": {
+        "chapter": 2
+      }
+    },
+    {
+      "ts": "2026-05-16T08:58:08.732463+00:00",
+      "step": "humanizer",
+      "agent": "humanizer",
+      "phase": "end",
+      "duration_ms": 2803.61
+    },
+    {
+      "ts": "2026-05-16T08:58:08.732463+00:00",
+      "step": "editor",
+      "agent": "editor",
+      "phase": "start",
+      "extra": {
+        "chapter": 2
+      }
+    },
+    {
+      "ts": "2026-05-16T08:58:19.136630+00:00",
+      "step": "editor",
+      "agent": "editor",
+      "phase": "end",
+      "duration_ms": 10404.71
+    },
+    {
+      "ts": "2026-05-16T08:58:19.136630+00:00",
+      "step": "fact_checker",
+      "agent": "fact_checker",
+      "phase": "start",
+      "extra": {
+        "chapter": 2
+      }
+    },
+    {
+      "ts": "2026-05-16T08:58:26.226087+00:00",
+      "step": "fact_checker",
+      "agent": "fact_checker",
+      "phase": "end",
+      "duration_ms": 7089.18
+    },
+    {
+      "ts": "2026-05-16T08:58:26.226087+00:00",
+      "step": "memory_keeper",
+      "agent": "memory_keeper",
+      "phase": "start",
+      "extra": {
+        "chapter": 2
+      }
+    },
+    {
+      "ts": "2026-05-16T08:58:39.719118+00:00",
+      "step": "memory_keeper",
+      "agent": "memory_keeper",
+      "phase": "end",
+      "duration_ms": 13492.68
+    },
+    {
+      "ts": "2026-05-16T08:58:39.720268+00:00",
+      "step": "assembler",
+      "agent": "assembler",
+      "phase": "start"
+    },
+    {
+      "ts": "2026-05-16T08:58:40.588516+00:00",
+      "step": "assembler",
+      "agent": "assembler",
+      "phase": "end",
+      "duration_ms": 868.52
+    }
+  ]
+}

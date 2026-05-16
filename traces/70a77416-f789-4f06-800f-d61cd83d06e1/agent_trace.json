@@ -1,0 +1,10 @@
+{
+  "events": [
+    {
+      "ts": "2026-05-16T08:53:09.731111+00:00",
+      "step": "pipeline",
+      "phase": "error",
+      "error": "ValidationError: 1 validation error for UserBrief\nwords_per_chapter\n  Input should be greater than or equal to 200 [type=greater_than_equal, input_value=25, input_type=int]\n    For further information visit https://errors.pydantic.dev/2.13/v/greater_than_equal"
+    }
+  ]
+}
